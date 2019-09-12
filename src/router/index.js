@@ -47,45 +47,48 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index'),
-        meta: { title: 'Dashboard', icon: 'dashboard' }
-      }
-    ]
-  },
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'Dashboard', icon: 'dashboard' }
+    }]
+  }
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
   {
-    path: '/excel',
+    path: '/trans',
     component: Layout,
-    redirect: 'noRedirect',
-    name: 'Excel',
-    meta: {
-      title: '翻译工具',
-      icon: 'example'
-    },
+    redirect: '/trans/translate',
+    name: 'tools',
+    meta: { title: '翻译工具箱', icon: 'example' },
     children: [
       {
         path: 'calc-match',
-        component: () => import('@/views/excel/calc-match'),
+        component: () => import('@/views/trans/calc-match'),
         name: 'calcMatch',
-        meta: { title: '计算匹配率' }
+        meta: { title: '计算匹配率', roles: ['admin'] }
       },
       {
         path: 'translate',
-        component: () => import('@/views/excel/translate'),
+        component: () => import('@/views/trans/translate'),
         name: 'translate',
-        meta: { title: '机器翻译' }
+        meta: { title: '机器翻译', roles: ['admin', 'editor'] }
       }
     ]
   },
+
   {
     path: 'external-link',
     component: Layout,
     children: [
       {
-        path: 'http://www.boss.mo',
+        path: 'http://www.boss.mo/tc/',
         meta: { title: '博士翻譯', icon: 'link' }
       }
     ]
@@ -95,12 +98,11 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () =>
-  new Router({
-    // mode: 'history', // require service support
-    scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
-  })
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
+})
 
 const router = createRouter()
 
