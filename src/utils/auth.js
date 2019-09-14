@@ -7,7 +7,7 @@ export function getToken() {
 }
 
 export function setToken(token) {
-  const inFifteenMinutes = new Date(new Date().getTime() + 1 * 60 * 1000)
+  const inFifteenMinutes = new Date(new Date().getTime() + 10 * 60 * 1000)
   return Cookies.set(TokenKey, token, { expires: inFifteenMinutes })
 }
 

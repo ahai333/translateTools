@@ -2,7 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
-const host = require('../../public/setting.json').base_url
+const host = require('../../public/files/setting.json').base_url
 
 // create an axios instance
 const service = axios.create({

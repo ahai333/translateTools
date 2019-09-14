@@ -3,14 +3,14 @@
     <upload-excel-component :on-success="handleSuccess" :before-upload="beforeUpload" />
     <el-form v-model="form" style="margin:10px">
       <el-row>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-form-item label="翻译引擎">
             <el-select v-model="form.engine" filterable placeholder="请选择翻译引擎">
               <el-option v-for="item in engineOption" :key="item" :label="item" :value="item" />
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-form-item label="源语言">
             <el-select v-model="form.from" filterable placeholder="请选择">
               <el-option
@@ -22,7 +22,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-form-item label="目标语言">
             <el-select v-model="form.to" filterable placeholder="请选择">
               <el-option
@@ -34,12 +34,12 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="4">
           <el-button type="primary" plain @click="onTranslate">开始翻译</el-button>
           <el-button type="primary" plain @click="handleDownload(labels, tableData)">导出到excel</el-button>
         </el-col>
-        <el-col :span="6">
-          <el-link href="/trans.xlsx" target="_blank" type="primary" icon="el-icon-view">翻译模板文件下载</el-link>
+        <el-col :span="4">
+          <el-link href="/files/trans.xlsx" target="_blank" type="primary" icon="el-icon-view">翻译模板文件下载</el-link>
         </el-col>
       </el-row>
       <el-progress :text-inside="true" :stroke-width="24" :percentage="percent" status="success" />
@@ -71,7 +71,7 @@ import UploadExcelComponent from '@/components/UploadExcel/index.vue'
 import { trans } from '@/api/translate.js'
 import XLSX from 'xlsx'
 
-const code_name = require('../../../public/lang.json').code_name
+const code_name = require('../../../public/files/lang.json').code_name
 export default {
   name: 'UploadExcel',
   components: { UploadExcelComponent },
