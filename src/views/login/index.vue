@@ -1,7 +1,7 @@
 <template>
   <el-container class="login-container">
     <el-header class="title-container">
-      <h3 class="title">FanE ID</h3>
+      <h3 class="title">FANY ID</h3>
     </el-header>
     <el-main>
       <el-form

@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'FANE ID',
+  title: 'FANY ID',
 
   /**
    * @type {boolean} true | false

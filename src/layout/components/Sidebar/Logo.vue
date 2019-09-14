@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: 'FANE ID',
+      title: 'FANY ID',
       logo: '/logo.gif'
     }
   }

@@ -1,4 +1,4 @@
-# vue-admin-template
+# translateTools
 
 > 这是一个极简的 翻译辅助工具集。
 
