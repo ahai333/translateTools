@@ -4,15 +4,23 @@
     <el-form v-model="form" style="margin-top:20px">
       <el-row>
         <el-col :span="5">
-          <el-form-item label="翻译引擎">
-            <el-select v-model="form.engine" filterable placeholder="请选择翻译引擎">
+          <el-form-item :label="$t('transView.engine')">
+            <el-select
+              v-model="form.engine"
+              filterable
+              :placeholder="$t('transView.selectPlaceholder')"
+            >
               <el-option v-for="item in engineOption" :key="item" :label="item" :value="item" />
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="5">
-          <el-form-item label="源语言">
-            <el-select v-model="form.from" filterable placeholder="请选择">
+          <el-form-item :label="$t('transView.source')">
+            <el-select
+              v-model="form.from"
+              filterable
+              :placeholder="$t('transView.selectPlaceholder')"
+            >
               <el-option
                 v-for="(item,index) in codeOption"
                 :key="index"
@@ -23,8 +31,12 @@
           </el-form-item>
         </el-col>
         <el-col :span="5">
-          <el-form-item label="目标语言">
-            <el-select v-model="form.to" filterable placeholder="请选择">
+          <el-form-item :label="$t('transView.target')">
+            <el-select
+              v-model="form.to"
+              filterable
+              :placeholder="$t('transView.selectPlaceholder')"
+            >
               <el-option
                 v-for="(item,index) in codeOption"
                 :key="index"
@@ -35,11 +47,32 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" plain @click="onQuality">开始计算</el-button>
-          <el-button type="primary" plain @click="handleDownload(labels, tableData)">导出到excel</el-button>
+          <el-button
+            type="primary"
+            plain
+            :disabled="tableData.length===0"
+            @click="onQuality"
+          >{{ $t('transView.beginTranslate') }}</el-button>
+          <el-button
+            type="primary"
+            plain
+            :disabled="tableData.length===0"
+            @click="handleDownload(labels, tableData)"
+          >{{ $t('transView.exportExcel') }}</el-button>
+          <el-button
+            type="primary"
+            plain
+            :disabled="tableData.length===0"
+            @click="onClear"
+          >{{ $t('transView.clear') }}</el-button>
         </el-col>
         <el-col :span="4">
-          <el-link href="/files/test.xlsx" target="_blank" type="primary" icon="el-icon-view">匹配率模板文件下载</el-link>
+          <el-link
+            href="/files/test.xlsx"
+            target="_blank"
+            type="primary"
+            icon="el-icon-view"
+          >{{ $t('transView.downloadModelFile') }}</el-link>
         </el-col>
       </el-row>
       <el-progress :text-inside="true" :stroke-width="24" :percentage="percent" status="success" />
@@ -70,8 +103,8 @@
 import UploadExcelComponent from '@/components/UploadExcel/index.vue'
 import { quality } from '@/api/translate.js'
 import XLSX from 'xlsx'
+import lang from './lang'
 
-const code_name = require('../../../public/files/lang.json').code_name
 export default {
   name: 'UploadExcel',
   components: { UploadExcelComponent },
@@ -90,26 +123,32 @@ export default {
       listLoading: false,
       labels: [
         {
-          prop: 'source', // 数据库中的编号
-          label: '源语言',
+          prop: 'index',
+          label: this.$t('transView.index'),
+          width: 80,
+          show: true
+        },
+        {
+          prop: 'source',
+          label: this.$t('transView.source'),
           width: 400,
           show: true
         },
         {
           prop: 'target',
-          label: '目标语言',
+          label: this.$t('transView.target'),
           width: 400,
           show: true
         },
         {
           prop: 'translate',
-          label: '机器翻译',
+          label: this.$t('transView.machineTranslate'),
           width: 400,
           show: true
         },
         {
           prop: 'quality',
-          label: '匹配率(%)',
+          label: this.$t('transView.similarity'),
           width: 120,
           show: true
         }
@@ -117,7 +156,7 @@ export default {
     }
   },
   created() {
-    this.codeOption = code_name
+    this.codeOption = lang.code_name
   },
   methods: {
     beforeUpload(file) {
@@ -128,25 +167,39 @@ export default {
       }
 
       this.$message({
-        message: 'Please do not upload files larger than 1m in size.',
+        message: this.$t('transView.errorSize'),
         type: 'warning'
       })
       return false
     },
+    onClear() {
+      this.tableData = []
+    },
     handleSuccess({ results, header }) {
+      // 判断格式
       // this.tableHeader = header
-      for (const index in header) {
-        if (header[index] !== this.labels[index].prop) {
-          this.$message({
-            message: '上传文件格式错误',
-            type: 'warning'
-          })
-          return
-        }
-      }
+      // for (const index in header) {
+      //   if (header[index] !== this.labels[index].prop) {
+      //     this.$message({
+      //       message: this.$t('transView.errorFile'),
+      //       type: 'warning'
+      //     })
+      //     return
+      //   }
+      // }
       // 要提前初始化字段，否则在刷新时不能实时显示更新内容，（因为初始时没有相应字段，没有正确数据绑定？）
-      for (const index in results) {
-        const tmp = { source: '', target: '', translate: '', quality: 0 }
+
+      const len = results.length
+      const start = this.tableData.length
+      for (let index = 0; index < len; index++) {
+        // for (const index in results) {
+        const tmp = {
+          index: index + start,
+          source: '',
+          target: '',
+          translate: '',
+          quality: 0
+        }
         if (typeof results[index].source !== 'undefined') {
           tmp.source = results[index].source
         }
@@ -270,7 +323,7 @@ export default {
       const date = new Date()
 
       const fn =
-        '导出结果' +
+        'result' +
         date.getFullYear() +
         (date.getMonth() + 1) +
         date.getDate() +

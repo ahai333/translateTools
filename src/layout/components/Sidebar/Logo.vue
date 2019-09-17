@@ -24,8 +24,8 @@ export default {
   },
   data() {
     return {
-      title: 'FANY ID',
-      logo: '/logo.gif'
+      title: 'FANY ID ADMIN',
+      logo: '/images/logo.gif'
     }
   }
 }
@@ -55,7 +55,7 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
-      width: 32px;
+      width: 132px;
       height: 32px;
       vertical-align: middle;
       margin-right: 12px;

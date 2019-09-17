@@ -1,4 +1,4 @@
-# translateTools
+# admin-template
 
 English | [简体中文](./README-zh.md)
 
@@ -10,10 +10,10 @@ English | [简体中文](./README-zh.md)
 
 ```bash
 # clone the project
-git clone https://github.com/ahai333/translateTools.git
+git clone https://github.com/ahai333/admin-template.git
 
 # enter the project directory
-cd translateTools
+cd admin-template
 
 # install dependency
 npm install
@@ -50,10 +50,6 @@ npm run lint
 npm run lint -- --fix
 ```
 
-
-## Related Project
-
-[translate-server](https://github.com/ahai333/translate-server)
 
 ## Browsers support
 
