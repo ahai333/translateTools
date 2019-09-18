@@ -46,7 +46,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="6">
           <el-button
             type="primary"
             plain
@@ -66,7 +66,7 @@
             @click="onClear"
           >{{ $t('transView.clear') }}</el-button>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="2">
           <el-link
             href="/files/test.xlsx"
             target="_blank"
@@ -102,8 +102,10 @@
 <script>
 import UploadExcelComponent from '@/components/UploadExcel/index.vue'
 import { quality } from '@/api/translate.js'
+import { startLog, endLog } from '@/api/admin.js'
 import XLSX from 'xlsx'
 import lang from './lang'
+import { getToken } from '@/utils/auth' // get token from cookie
 
 export default {
   name: 'UploadExcel',
@@ -121,6 +123,7 @@ export default {
       codeOption: [],
       percent: 0,
       listLoading: false,
+      username: '',
       labels: [
         {
           prop: 'index',
@@ -157,6 +160,7 @@ export default {
   },
   created() {
     this.codeOption = lang.code_name
+    this.username = getToken()
   },
   methods: {
     beforeUpload(file) {
@@ -217,21 +221,27 @@ export default {
       // console.log(this.tableData, 'tableData')
     },
     async onQuality() {
+      const retlog = await startLog({ username: this.username })
+
+      console.log(retlog, 'onQuality')
+
       const param = {
         engine: this.form.engine,
         source: 'this is a test.',
         target: '这是一个测试。',
         from: this.form.from,
-        to: this.form.to
+        to: this.form.to,
+        opt_id: retlog.data.opt_id
       }
       const count = this.tableData.length
       this.percent = 0
+
       for (let i = 0; i < count; i++) {
         param.source = this.tableData[i].source
         param.target = this.tableData[i].target
         this.tableData[i].translate = ''
         this.tableData[i].quality = 0
-        const res = await quality(param)
+        let res = await quality(param)
 
         this.tableData[i].translate = res.data.text
         this.tableData[i].quality = res.data.quality
@@ -241,6 +251,20 @@ export default {
         //  this.listLoading = i + 1 === count ? false : true
         if (i + 1 === count) {
           this.$forceUpdate()
+          // 日志结束
+          const logparam = {
+            uuid: retlog.data.opt_id,
+            endtime: new Date(),
+            detail: 1,
+            engine: this.form.engine,
+            content: 'total items: ' + count,
+            remarks: ''
+          }
+          res = await endLog(logparam)
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          })
         }
       }
       // this.$forceUpdate()

@@ -28,7 +28,10 @@ export default {
     check: '检测',
     system: '系统设置',
     admin: '用户管理',
-    config: '配置'
+    config: '配置',
+    log: '日志',
+    syslog: '系统日志',
+    translog: '操作日志'
   },
   navbar: {
     dashboard: '首页',

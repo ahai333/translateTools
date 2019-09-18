@@ -14,7 +14,7 @@
               </el-tab-pane>
               <el-tab-pane label="Timeline" name="timeline">
                 <timeline />
-              </el-tab-pane> -->
+              </el-tab-pane>-->
               <el-tab-pane label="Account" name="account">
                 <account :user="user" />
               </el-tab-pane>
@@ -29,13 +29,14 @@
 <script>
 import { mapGetters } from 'vuex'
 import UserCard from './components/UserCard'
-import Activity from './components/Activity'
-import Timeline from './components/Timeline'
+// import Activity from './components/Activity'
+// import Timeline from './components/Timeline'
 import Account from './components/Account'
+import { getToken } from '@/utils/auth' // get token from cookie
 
 export default {
   name: 'Profile',
-  components: { UserCard, Activity, Timeline, Account },
+  components: { UserCard, Account },
   data() {
     return {
       user: {},
@@ -51,11 +52,13 @@ export default {
   methods: {
     getUser() {
       this.user = {
+        username: getToken(),
         name: this.name,
         role: this.roles.join(' | '),
         email: 'admin@test.com',
         avatar: this.avatar
       }
+      console.log(this.user, 'Profile')
     }
   }
 }

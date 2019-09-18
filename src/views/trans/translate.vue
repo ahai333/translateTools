@@ -46,7 +46,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="6">
           <el-button
             type="primary"
             plain
@@ -66,7 +66,7 @@
             @click="onClear"
           >{{ $t('transView.clear') }}</el-button>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="2">
           <el-link
             href="/files/trans.xlsx"
             target="_blank"

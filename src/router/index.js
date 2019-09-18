@@ -10,6 +10,8 @@ import Layout from '@/layout'
 import preTransRouter from './modules/pretrans'
 import translatedRouter from './modules/translated'
 import systemRouter from './modules/system'
+import logRouter from './modules/log'
+
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -122,8 +124,8 @@ export const asyncRoutes = [
   // tableRouter,
   preTransRouter,
   translatedRouter,
+  logRouter,
   systemRouter,
-
   {
     path: '/theme',
     component: Layout,

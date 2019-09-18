@@ -23,7 +23,10 @@ export default {
     check: 'Check',
     system: 'System',
     admin: 'Users',
-    config: 'Config'
+    config: 'Config',
+    log: 'Log',
+    syslog: 'System log',
+    translog: 'Operation log'
   },
   navbar: {
     dashboard: 'Dashboard',

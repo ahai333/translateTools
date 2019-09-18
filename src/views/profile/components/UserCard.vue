@@ -8,7 +8,7 @@
       <div class="box-center">
         <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
           <div>Hello</div>
-          {{ user.role }}
+          {{ user.username }}
         </pan-thumb>
       </div>
       <div class="box-center">
@@ -62,6 +62,7 @@ export default {
       type: Object,
       default: () => {
         return {
+          username: '',
           name: '',
           email: '',
           avatar: '',
