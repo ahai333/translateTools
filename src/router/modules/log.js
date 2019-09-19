@@ -5,25 +5,31 @@ import Layout from '@/layout'
 const logRouter = {
   path: '/log',
   component: Layout,
-  redirect: '/log/config',
+  redirect: '/log/translog',
   name: 'log',
   meta: {
     title: 'log',
-    icon: 'example',
-    roles: ['admin', 'editor']
+    icon: 'list'
   },
   children: [
     {
       path: 'translog',
       component: () => import('@/views/log/translog'),
       name: 'translog',
-      meta: { title: 'translog', roles: ['admin', 'editor'] }
+      meta: { title: 'translog' }
     },
     {
       path: 'syslog',
       component: () => import('@/views/log/syslog'),
       name: 'syslog',
-      meta: { title: 'syslog', roles: ['admin', 'editor'] }
+      meta: { title: 'syslog' }
+    },
+    {
+      path: 'detaillog',
+      component: () => import('@/views/log/detaillog'),
+      name: 'detaillog',
+      hidden: true,
+      meta: { title: 'detaillog' }
     }
   ]
 }

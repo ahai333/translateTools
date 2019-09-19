@@ -31,7 +31,8 @@ export default {
     config: '配置',
     log: '日志',
     syslog: '系统日志',
-    translog: '操作日志'
+    translog: '操作日志',
+    detaillog: '详细日志'
   },
   navbar: {
     dashboard: '首页',
@@ -100,5 +101,41 @@ export default {
     errorSize: '上传文件应不大于1Mb',
     similarity: '相似度(%)',
     clear: '清除结果'
+  },
+  logView: {
+    operate: '操作',
+    starttime: '开始时间',
+    endtime: '结束时间',
+    content: '内容',
+    remarks: '备注',
+    source: '源语言',
+    engine: '翻译引擎',
+    target: '目标语言',
+    mt: '机器翻译',
+    similarity: '相似度(%)'
+  },
+  systemView: {
+    addnew: '添加新用户',
+    username: '用户名',
+    email: '邮箱',
+    role: '权限',
+    expire: '有效期',
+    password: '密码',
+    remarks: '备注',
+    view: '查看/编辑',
+    changepwd: '确实要修改密码?',
+    similarity: '相似度',
+    submit: '提交',
+    cancel: '取消',
+    selectPlaceholder: '请选择'
+  },
+  components: {
+    selectPlaceholder: '请选择',
+    exportExcel: '导出到excel',
+    query: '查询',
+    operate: '操作',
+    edit: '编辑',
+    remove: '批量删除',
+    delete: '删除'
   }
 }

@@ -1,5 +1,13 @@
 <template>
-  <ah-table :labels="labels" :records="values" :handle-edit="onEdit" style="margin:10px" />
+  <div>
+    <ah-table
+      :labels="labels"
+      :records="values"
+      :handle-edit="onEdit"
+      :queriable="false"
+      style="margin:10px"
+    />
+  </div>
 </template>
 
 <script>
@@ -13,52 +21,59 @@ export default {
     return {
       username: '',
       values: [],
+      detailVisible: false,
       labels: [
         {
           prop: 'uuid', // 数据库中的编号
-          label: '编号',
+          label: 'uuid',
           width: 100,
           show: false
         },
         {
           prop: 'user_id',
-          label: '用户名',
+          label: 'userid',
           width: 200,
           show: false
         },
         {
           prop: 'operate',
-          label: '操作',
-          width: 250,
+          label: this.$t('logView.operate'),
+          width: 200,
           show: true
         },
         {
           prop: 'detail',
-          label: '细节',
+          label: 'detail',
           width: 200,
           show: false
         },
         {
+          prop: 'engine',
+          label: this.$t('logView.engine'),
+          width: 150,
+          show: true
+        },
+        {
           prop: 'starttime',
-          label: '开始时间',
+          label: this.$t('logView.starttime'),
           width: 200,
           show: true
         },
         {
           prop: 'endtime',
-          label: '结束时间',
+          label: this.$t('logView.endtime'),
           width: 250,
           show: true
         },
         {
           prop: 'content',
-          label: '内容',
+          label: this.$t('logView.content'),
           width: 250,
           show: true
         },
         {
           prop: 'remarks',
-          label: '备注',
+          label: this.$t('logView.remarks'),
           width: 350,
           show: true
         }
@@ -79,9 +94,12 @@ export default {
         })
       })
     },
-    getDetail() {
-      detailLog().then(res => {
-        this.values = res.data
+    getDetail(opt_id) {
+      const param = {
+        opt_id: opt_id
+      }
+      detailLog(param).then(res => {
+        this.detailValue = res.data
         this.$message({
           message: res.msg,
           type: 'success'
@@ -90,6 +108,11 @@ export default {
     },
     onEdit(index, row) {
       console.log(row, 'onEdit')
+      this.$router.push({
+        path: '/log/detaillog',
+        name: 'detaillog',
+        params: { opt_id: row.uuid }
+      })
     }
   }
 }

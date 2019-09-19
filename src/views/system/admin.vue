@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="3">
-        <el-button type="primary" @click="onAddNew">添加新人员</el-button>
+        <el-button plain type="primary" @click="onAddNew">{{ $t('systemView.addnew') }}</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -21,7 +21,7 @@
       <el-form ref="editForm" :model="editForm" label-width="120px" :rules="editFormRules">
         <el-row>
           <el-col :span="6">
-            <el-form-item label="用户名" prop="username">
+            <el-form-item :label="$t('systemView.username')" prop="username">
               <el-input
                 v-model="editForm.username"
                 auto-complete="off"
@@ -30,13 +30,13 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="密码" prop="password">
+            <el-form-item :label="$t('systemView.password')" prop="password">
               <el-input v-model="editForm.password" type="password" />
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="权限" prop="role">
-              <el-select v-model="editForm.role" placeholder="请选择">
+            <el-form-item :label="$t('systemView.role')" prop="role">
+              <el-select v-model="editForm.role" :placeholder="$t('systemView.selectPlaceholder')">
                 <el-option v-for="item in roles" :key="item" :label="item" :value="item" />
               </el-select>
             </el-form-item>
@@ -44,23 +44,27 @@
         </el-row>
         <el-row>
           <el-col :span="6">
-            <el-form-item label="邮箱" prop="email">
+            <el-form-item :label="$t('systemView.email')" prop="email">
               <el-input v-model="editForm.email" />
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="有效期" prop="expire">
-              <el-date-picker v-model="editForm.expire" type="date" placeholder="选择日期" />
+            <el-form-item :label="$t('systemView.expire')" prop="expire">
+              <el-date-picker
+                v-model="editForm.expire"
+                type="date"
+                :placeholder="$t('systemView.selectPlaceholder')"
+              />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="18">
-            <el-form-item label="备注" prop="remarks">
+            <el-form-item :label="$t('systemView.remarks')" prop="remarks">
               <el-input
                 v-model="editForm.remarks"
                 type="textarea"
-                placeholder="请输入内容"
+                :placeholder="$t('systemView.remarks')"
                 maxlength="300"
                 rows="3"
                 show-word-limit
@@ -70,8 +74,12 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="editFormVisible = false">取消</el-button>
-        <el-button type="primary" :loading="editLoading" @click.native="onEditSubmit">提交</el-button>
+        <el-button @click.native="editFormVisible = false">{{ $t('systemView.cancel') }}</el-button>
+        <el-button
+          type="primary"
+          :loading="editLoading"
+          @click.native="onEditSubmit"
+        >{{ $t('systemView.submit') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -102,57 +110,67 @@ export default {
       roles: ['admin', 'editor'],
       editFormVisible: false, // 编辑界面是否显示
       editLoading: false,
-      editTitle: '查看/编辑',
+      editTitle: this.$t('systemView.view'),
       editIsAdd: false,
       dialogImageUrl: '',
       dialogVisible: false,
       editFormRules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          {
+            required: true,
+            message: this.$t('systemView.username'),
+            trigger: 'blur'
+          }
         ],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+        password: [
+          {
+            required: true,
+            message: this.$t('systemView.password'),
+            trigger: 'blur'
+          }
+        ]
       },
       //
       labels: [
         {
           prop: 'uuid', // 数据库中的编号
-          label: '编号',
+          label: 'uuid',
           width: 100,
           show: false
         },
         {
           prop: 'username',
-          label: '用户名',
+          label: this.$t('systemView.username'),
           width: 200,
           show: true
         },
         {
           prop: 'email',
-          label: '邮箱',
+          label: this.$t('systemView.email'),
           width: 250,
           show: true
         },
         {
           prop: 'role',
-          label: '权限',
+          label: this.$t('systemView.role'),
           width: 200,
           show: true
         },
         {
           prop: 'expire',
-          label: '有效期',
+          label: this.$t('systemView.expire'),
           width: 200,
           show: true
         },
         {
           prop: 'password',
-          label: '密码',
+          label: this.$t('systemView.password'),
           width: 250,
           show: false
         },
         {
           prop: 'remarks',
-          label: '备注',
+          label: this.$t('systemView.remarks'),
           width: 350,
           show: true
         }
@@ -175,7 +193,7 @@ export default {
       })
     },
     onEdit(index, row) {
-      this.editTitle = '查看/编辑'
+      this.editTitle = this.$t('systemView.view')
       this.editFormVisible = true
       this.editIsAdd = false
       this.editForm = Object.assign({}, row)
@@ -219,7 +237,7 @@ export default {
       })
     },
     onAddNew() {
-      this.editTitle = '添加'
+      this.editTitle = this.$t('systemView.addnew')
       this.editFormVisible = true
       this.editIsAdd = true
       // 初始化this.editForm
@@ -227,7 +245,7 @@ export default {
         uuid: 0, // 当uuid==0时，是新加的用户
         username: '',
         password: '',
-        role: '',
+        role: 'editor',
         email: '',
         expire: '',
         remarks: ''
@@ -239,7 +257,7 @@ export default {
       console.log(this.tmppass, this.editForm.password, 'onEditSubmit')
 
       if (this.tmppass !== this.editForm.password) {
-        this.$confirm('确实要修改密码?', 'Warning', {
+        this.$confirm(this.$t('systemView.changepwd'), 'Warning', {
           type: 'warning'
         })
           .then(() => {

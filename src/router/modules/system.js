@@ -9,7 +9,7 @@ const systemRouter = {
   name: 'system',
   meta: {
     title: 'system',
-    icon: 'example',
+    icon: 'lock',
     roles: ['admin']
   },
   children: [

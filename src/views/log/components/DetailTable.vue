@@ -2,30 +2,13 @@
   <div class="dndList">
     <!--工具条-->
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-      <el-form v-if="queriable" :inline="true" :model="filters">
-        <el-form-item :label="$t('components.selectPlaceholder')">
-          <el-select v-model="filters.name" :placeholder="$t('components.selectPlaceholder')">
-            <template v-for="(value, key, index) in labels">
-              <el-option v-if="value.show" :key="index" :label="value.label" :value="value.prop" />
-            </template>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="filters.value" placeholder />
-        </el-form-item>
-        <el-form-item>
-          <el-button plain type="primary" @click="handleQuery(filters)">{{ $t('components.query') }}</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            plain
-            type="primary"
-            @click="handleDownload(labels, records)"
-          >{{ $t('components.exportExcel') }}</el-button>
-        </el-form-item>
-      </el-form>
+      <el-button
+        plain
+        type="primary"
+        @click="handleDownload(labels, records)"
+      >{{ $t('components.exportExcel') }}</el-button>
     </el-col>
-    <el-table stripe :data="currecords" style="width: 100%;" @selection-change="selsChange">
+    <el-table stripe :data="currecords" style="width: 100%;">
       <el-table-column type="index" width="50" />
       <template v-for="(value, key, index) in labels">
         <el-table-column
@@ -37,15 +20,6 @@
           sortable
         />
       </template>
-      <el-table-column :label="$t('components.operate')" width="150">
-        <template slot-scope="scope">
-          <el-button
-            plain
-            size="small"
-            @click="handleEdit(scope.$index, scope.row)"
-          >{{ $t('components.query') }}</el-button>
-        </template>
-      </el-table-column>
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
@@ -81,27 +55,7 @@ export default {
       default() {
         return []
       }
-    },
-    // 编辑函数
-    handleEdit: {
-      type: Function,
-      default() {
-        return function(index, row) {}
-      }
-    },
-    // 查询，参数为查询值
-    handleQuery: {
-      type: Function,
-      default() {
-        return function(filters) {}
-      }
-    },
-    queriable: {
-      type: Boolean,
-      default() {
-        return true
-      }
-    } // 是否可查询，导出
+    }
   },
   data() {
     return {
@@ -110,12 +64,7 @@ export default {
       total: 0,
       page: 1,
       pagesize: 10,
-      listLoading: false,
-      sels: [], // 列表选中列,
-      filters: {
-        name: '',
-        value: ''
-      }
+      listLoading: false
     }
   },
   watch: {
@@ -149,10 +98,6 @@ export default {
     handleSizeChange(val) {
       this.pagesize = val
       this.getcurRecords()
-    },
-    selsChange(sels) {
-      this.sels = sels
-      //  console.log(sels, 'sels')
     },
     // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
     sheet2blob(sheet, sheetName) {

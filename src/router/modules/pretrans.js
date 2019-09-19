@@ -9,7 +9,7 @@ const preTransRouter = {
   name: 'pretrans',
   meta: {
     title: 'preTrans',
-    icon: 'example'
+    icon: 'international'
   },
   children: [
     {

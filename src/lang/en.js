@@ -26,7 +26,8 @@ export default {
     config: 'Config',
     log: 'Log',
     syslog: 'System log',
-    translog: 'Operation log'
+    translog: 'Operation log',
+    detaillog: 'Detail logs'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -96,5 +97,41 @@ export default {
     errorSize: 'Please do not upload files larger than 1m in size.',
     similarity: 'Similarity(%)',
     clear: 'Clear'
+  },
+  logView: {
+    operate: 'Operate',
+    starttime: 'StartTime',
+    endtime: 'EndTime',
+    content: 'Content',
+    remarks: 'Remarks',
+    source: 'Source',
+    target: 'Target',
+    engine: 'Engine',
+    mt: 'Machine Translate',
+    similarity: 'Similarity(%)'
+  },
+  systemView: {
+    addnew: 'Add New',
+    username: 'User Name',
+    email: 'Email',
+    role: 'Role',
+    expire: 'Expired Time',
+    password: 'Password',
+    remarks: 'Remarks',
+    view: 'View/Edit',
+    changepwd: 'Change your password?',
+    similarity: 'Similarity',
+    submit: 'Submit',
+    cancel: 'Cancel',
+    selectPlaceholder: 'Select'
+  },
+  components: {
+    selectPlaceholder: 'Select',
+    exportExcel: 'Export to the excel file',
+    query: 'Query',
+    operate: 'Operate',
+    edit: 'Edit',
+    remove: 'Remove',
+    delete: 'Del'
   }
 }
