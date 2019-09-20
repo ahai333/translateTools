@@ -97,7 +97,7 @@ export default {
     target: '目标语言',
     beginTranslate: '开始',
     exportExcel: '导出到excel',
-    downloadModelFile: '翻译模板文件下载',
+    downloadModelFile: '模板文件下载',
     machineTranslate: '机器翻译',
     errorFile: '上传文件格式错误',
     errorSize: '上传文件应不大于1Mb',

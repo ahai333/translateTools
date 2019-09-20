@@ -5,6 +5,7 @@
         <router-view :key="key" />
       </keep-alive>
     </transition>
+    <div class="copyright">CopyRight © 2019 ahai</div>
   </section>
 </template>
 
@@ -31,7 +32,7 @@ export default {
   overflow: hidden;
 }
 
-.fixed-header+.app-main {
+.fixed-header + .app-main {
   padding-top: 50px;
   height: 100vh;
   overflow: auto;
@@ -43,7 +44,7 @@ export default {
     min-height: calc(100vh - 84px);
   }
 
-  .fixed-header+.app-main {
+  .fixed-header + .app-main {
     padding-top: 84px;
   }
 }
@@ -55,5 +56,12 @@ export default {
   .fixed-header {
     padding-right: 15px;
   }
+}
+.copyright {
+  text-align: center;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  margin: 1rem;
 }
 </style>

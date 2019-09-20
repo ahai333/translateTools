@@ -23,6 +23,12 @@ const preTransRouter = {
       component: () => import('@/views/trans/duplicate'),
       name: 'prematch',
       meta: { title: 'preMatch', roles: ['admin'] }
+    },
+    {
+      path: 'codediff',
+      component: () => import('@/views/trans/code-diff'),
+      name: 'codediff',
+      meta: { title: 'codediff', roles: ['admin'] }
     }
   ]
 }
