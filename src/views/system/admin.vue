@@ -180,10 +180,10 @@ export default {
     }
   },
   created() {
-    this.getInfo()
+    this.getList()
   },
   methods: {
-    getInfo() {
+    getList() {
       getAdminList().then(res => {
         this.values = res.data
         this.$message({
@@ -206,7 +206,7 @@ export default {
           message: res.msg,
           type: 'success'
         })
-        this.getInfo()
+        this.getList()
       })
     },
     onBatchRemove(sels) {
@@ -219,7 +219,7 @@ export default {
           message: res.msg,
           type: 'success'
         })
-        this.getInfo()
+        this.getList()
       })
     },
     onQuery(filter) {
@@ -269,7 +269,7 @@ export default {
                   type: 'success'
                 })
                 this.editFormVisible = false
-                this.getInfo()
+                this.getList()
               } else {
                 this.$message({
                   message: res.msg,
@@ -289,7 +289,7 @@ export default {
               type: 'success'
             })
             this.editFormVisible = false
-            this.getInfo()
+            this.getList()
           } else {
             this.$message({
               message: res.msg,

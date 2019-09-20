@@ -41,6 +41,7 @@ const actions = {
           // console.log(data, 'login')
 
           setToken(data.token)
+          setToken(data.auth, 'Authorization')
           resolve()
         })
         .catch(error => {

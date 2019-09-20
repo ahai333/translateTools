@@ -1,5 +1,6 @@
 <template>
   <el-container class="login-container">
+    <lang-select class="set-language" />
     <el-header class="title-container">
       <h3 class="title">FANY ID</h3>
     </el-header>
@@ -20,7 +21,7 @@
           <el-input
             ref="username"
             v-model="loginForm.username"
-            placeholder="Username"
+            :placeholder="$t('login.username')"
             name="username"
             type="text"
             tabindex="1"
@@ -37,7 +38,7 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            placeholder="Password"
+            :placeholder="$t('login.password')"
             name="password"
             tabindex="2"
             auto-complete="on"
@@ -53,14 +54,7 @@
           type="primary"
           style="width:100%;margin-bottom:30px;"
           @click.native.prevent="handleLogin"
-        >Login</el-button>
-
-        <div class="tips">
-          <span style="margin-right:20px;"></span>
-          <span>
-            <lang-select class="set-language" />
-          </span>
-        </div>
+        >{{ $t('login.logIn') }}</el-button>
       </el-form>
     </el-main>
     <el-footer class="footer">CopyRight © 2019 ahai</el-footer>
@@ -79,22 +73,22 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error(this.$t('login.username')))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error(this.$t('login.checkpass')))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [
@@ -167,7 +161,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          let param = Object.assign({}, this.loginForm)
+          const param = Object.assign({}, this.loginForm)
           param.password = md5(this.loginForm.password)
           this.$store
             .dispatch('user/login', param)
@@ -268,7 +262,10 @@ $cursor: #fff;
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
-
+.set-language {
+  margin: 20px;
+  text-align: right;
+}
 .login-container {
   background-image: url('/files/section.jpg');
   min-height: 100%;
@@ -313,7 +310,7 @@ $light_gray: #eee;
 
   .title-container {
     position: relative;
-    margin: 180px auto 50px auto;
+    margin: 150px auto 50px auto;
 
     .title {
       font-size: 80px;

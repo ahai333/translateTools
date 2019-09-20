@@ -82,10 +82,10 @@ export default {
   },
   created() {
     this.username = getToken()
-    this.getInfo()
+    this.getList()
   },
   methods: {
-    getInfo() {
+    getList() {
       optLog({ username: this.username }).then(res => {
         this.values = res.data
         this.$message({

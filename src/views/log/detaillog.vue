@@ -60,6 +60,7 @@ export default {
     }
   },
   mounted() {
+    // 获取参数
     this.opt_id = this.$route.params.opt_id
     if (this.opt_id !== '' || typeof this.opt_id !== 'undefined') {
       this.getDetail(this.opt_id)

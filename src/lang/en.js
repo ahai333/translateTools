@@ -45,7 +45,9 @@ export default {
     any: 'any',
     thirdparty: 'Or connect with',
     thirdpartyTips:
-      'Can not be simulated on local, so please combine you own business simulation! ! !'
+      'Can not be simulated on local, so please combine you own business simulation! ! !',
+    checkpass: 'The password can not be less than 6 digits',
+    checkusername: 'Please enter the correct user name'
   },
   permission: {
     addRole: 'New Role',
