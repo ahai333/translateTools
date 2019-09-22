@@ -1,10 +1,13 @@
 <template>
-  <div>测试页</div>
+  <div>操作记录</div>
 </template>
 
 <script>
+/**
+ * 操作记录
+ */
 export default {}
 </script>
 
-<style lang="scss" scoped>
+<style>
 </style>

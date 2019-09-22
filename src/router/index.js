@@ -7,10 +7,13 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import preTransRouter from './modules/pretrans'
-import translatedRouter from './modules/translated'
+// import preTransRouter from './modules/pretrans'
+// import translatedRouter from './modules/translated'
+// import logRouter from './modules/log'
 import systemRouter from './modules/system'
-import logRouter from './modules/log'
+import compareRouter from './modules/compare'
+import similarityRouter from './modules/similarity'
+import mtRouter from './modules/mt'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -122,23 +125,14 @@ export const asyncRoutes = [
   // chartsRouter,
   // nestedRouter,
   // tableRouter,
-  preTransRouter,
-  translatedRouter,
-  logRouter,
+  //  preTransRouter,
+  //  translatedRouter,
+  //  logRouter,
+  compareRouter,
+  similarityRouter,
+  mtRouter,
+
   systemRouter,
-  {
-    path: '/theme',
-    component: Layout,
-    meta: { roles: ['admin'], title: 'theme', icon: 'theme' },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/theme/index'),
-        name: 'Theme',
-        meta: { title: 'theme', icon: 'theme' }
-      }
-    ]
-  },
 
   { path: '*', redirect: '/404', hidden: true }
 ]

@@ -61,7 +61,7 @@ export default {
   text-align: center;
   font-family: 'Open Sans', Arial, sans-serif;
   font-style: normal;
-  font-weight: 600;
+  // font-weight: 600;
   margin: 1rem;
 }
 </style>

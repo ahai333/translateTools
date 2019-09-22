@@ -1,3 +1,5 @@
+import compareView from './zh/compareView'
+
 export default {
   route: {
     dashboard: '首页',
@@ -20,7 +22,7 @@ export default {
     i18n: '国际化',
     externalLink: '外链',
     profile: '个人中心',
-    preTrans: '翻译预处理',
+    preTrans: '机器翻译',
     machineTranslate: '机器翻译',
     preMatch: '查重',
     calcMatch: '相似度',
@@ -29,10 +31,15 @@ export default {
     system: '系统设置',
     admin: '用户管理',
     config: '配置',
-    log: '日志',
+    log: '操作记录',
     syslog: '系统日志',
-    translog: '操作日志',
-    detaillog: '详细日志'
+    detail: '详情',
+    similarity: '相似度',
+    similarityIndex: '计算相似度',
+    compare: '文本比较',
+    compareIndex: '文本比较',
+    mt: '机器翻译',
+    mtIndex: '机器翻译'
   },
   navbar: {
     dashboard: '首页',
@@ -68,12 +75,6 @@ export default {
     description:
       '引导页对于一些第一次进入项目的人很有用，你可以简单介绍下项目的功能。本 Demo 是基于',
     button: '打开引导'
-  },
-  theme: {
-    change: '换肤',
-    documentation: '换肤文档',
-    tips:
-      'Tips: 它区别于 navbar 上的 theme-pick, 是两种不同的换肤方法，各自有不同的应用场景，具体请参考文档。'
   },
   tagsView: {
     refresh: '刷新',
@@ -139,5 +140,6 @@ export default {
     edit: '编辑',
     remove: '批量删除',
     delete: '删除'
-  }
+  },
+  compareView
 }

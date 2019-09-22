@@ -27,7 +27,13 @@ export default {
     log: 'Log',
     syslog: 'System log',
     translog: 'Operation log',
-    detaillog: 'Detail logs'
+    detail: 'Detail logs',
+    similarity: 'Similarity',
+    similarityIndex: 'Similarity',
+    compare: 'Text Comparison',
+    compareIndex: 'Text Comparison',
+    mt: 'MT',
+    mtIndex: 'Machine Translate'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -65,12 +71,6 @@ export default {
       'The guide page is useful for some people who entered the project for the first time. You can briefly introduce the features of the project. Demo is based on ',
     button: 'Show Guide'
   },
-  theme: {
-    change: 'Change Theme',
-    documentation: 'Theme documentation',
-    tips:
-      'Tips: It is different from the theme-pick on the navbar is two different skinning methods, each with different application scenarios. Refer to the documentation for details.'
-  },
   tagsView: {
     refresh: 'Refresh',
     close: 'Close',
@@ -93,12 +93,18 @@ export default {
     target: 'Target',
     beginTranslate: 'Begin',
     exportExcel: 'Export to the excel file',
-    downloadModelFile: 'Download the example file',
+    downloadModelFile: 'Example file',
     machineTranslate: 'Machine Translate',
     errorFile: 'file error!',
     errorSize: 'Please do not upload files larger than 1m in size.',
     similarity: 'Similarity(%)',
     clear: 'Clear'
+  },
+  diffView: {
+    firstData: 'TEXT A:',
+    secondData: 'TEXT B:',
+    inputData: 'Please input:',
+    displayStyle: 'Display Style:'
   },
   logView: {
     operate: 'Operate',
