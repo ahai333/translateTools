@@ -29,6 +29,13 @@ const mtRouter = {
       component: () => import('@/views/mt/config'),
       name: 'mt-config',
       meta: { title: 'config' }
+    },
+    {
+      path: 'detail',
+      component: () => import('@/views/mt/detail'),
+      name: 'mt-detail',
+      hidden: true,
+      meta: { title: 'detail' }
     }
   ]
 }

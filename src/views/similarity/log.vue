@@ -13,7 +13,7 @@
 <script>
 // 操作日志
 import AhTable from './components/AhTable.vue'
-import { optLog, detailLog } from '@/api/log.js'
+import { list } from '@/api/log.js'
 import { getToken } from '@/utils/auth' // get token from cookie
 export default {
   components: { AhTable },
@@ -100,23 +100,8 @@ export default {
   },
   methods: {
     getList() {
-      optLog({ user_id: this.user_id, tablename: 'similarity_log' }).then(
-        res => {
-          this.values = res.data
-          this.$message({
-            message: res.msg,
-            type: 'success'
-          })
-        }
-      )
-    },
-    getDetail(opt_id) {
-      const param = {
-        opt_id: opt_id,
-        tablename: 'similarity_detail'
-      }
-      detailLog(param).then(res => {
-        this.detailValue = res.data
+      list({ user_id: this.user_id, tablename: 'similarity_log' }).then(res => {
+        this.values = res.data
         this.$message({
           message: res.msg,
           type: 'success'
@@ -124,7 +109,7 @@ export default {
       })
     },
     onEdit(index, row) {
-      console.log(row, 'onEdit')
+      // console.log(row, 'onEdit')
       this.$router.push({
         path: '/similarity/detail',
         name: 'similarity-detail',

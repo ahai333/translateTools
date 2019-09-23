@@ -19,12 +19,6 @@ const compareRouter = {
       meta: { title: 'compareIndex' }
     },
     {
-      path: 'log',
-      component: () => import('@/views/compare/log'),
-      name: 'compare-log',
-      meta: { title: 'log' }
-    },
-    {
       path: 'config',
       component: () => import('@/views/compare/config'),
       name: 'compare-config',

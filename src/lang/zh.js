@@ -105,7 +105,7 @@ export default {
     errorSize: '上传文件应不大于1Mb',
     similarity: '相似度(%)',
     clear: '清除结果',
-    types: '请输入所属领域'
+    types: '所属领域'
   },
   logView: {
     operate: '操作',

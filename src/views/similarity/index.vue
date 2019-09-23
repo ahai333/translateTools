@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <upload-excel-component :on-success="handleSuccess" :before-upload="beforeUpload" />
-    <el-form v-model="form" style="margin-top:20px">
+    <el-form v-model="form" style="margin-top:20px" label-width="100px">
       <el-row>
         <el-col :span="5">
           <el-form-item :label="$t('transView.engine')">
@@ -51,7 +51,7 @@
             type="primary"
             plain
             :disabled="tableData.length===0"
-            @click="onQuality"
+            @click="onSimilarity"
           >{{ $t('transView.beginTranslate') }}</el-button>
           <el-button
             type="primary"
@@ -76,12 +76,20 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="4">
-          <el-input v-model="form.types" :placeholder="$t('transView.types')" />
+        <el-col :span="5">
+          <el-form-item :label="$t('transView.types')">
+            <el-input v-model="form.types" />
+          </el-form-item>
         </el-col>
       </el-row>
-      <el-progress :text-inside="true" :stroke-width="24" :percentage="percent" status="success" />
     </el-form>
+    <el-progress
+      :text-inside="true"
+      :stroke-width="24"
+      :percentage="percent"
+      status="success"
+      style="margin-top:10px"
+    />
     <el-table
       v-loading="listLoading"
       :data="tableData"
@@ -106,11 +114,10 @@
 
 <script>
 import UploadExcelComponent from '@/components/UploadExcel/index.vue'
-import { quality } from '@/api/translate.js'
-import { startLog, endLog } from '@/api/admin.js'
+import { similarity, startLog, endLog } from '@/api/similarity.js'
 import XLSX from 'xlsx'
 import lang from '@/utils/lang'
-import { getToken } from '@/utils/auth' // get token from cookie
+import { getToken } from '@/utils/auth'
 
 export default {
   name: 'UploadExcel',
@@ -156,7 +163,7 @@ export default {
           show: true
         },
         {
-          prop: 'quality',
+          prop: 'similarity',
           label: this.$t('transView.similarity'),
           width: 120,
           show: true
@@ -208,7 +215,7 @@ export default {
           source: '',
           target: '',
           translate: '',
-          quality: 0
+          similarity: 0
         }
         if (typeof results[index].source !== 'undefined') {
           tmp.source = results[index].source
@@ -219,17 +226,14 @@ export default {
         if (typeof results[index].translate !== 'undefined') {
           tmp.translate = results[index].translate
         }
-        if (typeof results[index].quality !== 'undefined') {
-          tmp.quality = results[index].quality
+        if (typeof results[index].similarity !== 'undefined') {
+          tmp.similarity = results[index].similarity
         }
         this.tableData.push(tmp)
       }
-      // console.log(this.tableData, 'tableData')
     },
-    async onQuality() {
+    async onSimilarity() {
       const retlog = await startLog({ username: this.username })
-
-      // console.log(retlog, 'onQuality')
 
       const param = {
         engine: this.form.engine,
@@ -248,11 +252,11 @@ export default {
         param.source = this.tableData[i].source
         param.target = this.tableData[i].target
         this.tableData[i].translate = ''
-        this.tableData[i].quality = 0
-        let res = await quality(param)
+        this.tableData[i].similarity = 0
+        let res = await similarity(param)
 
         this.tableData[i].translate = res.data.text
-        this.tableData[i].quality = res.data.quality
+        this.tableData[i].similarity = res.data.similarity
 
         this.percent = +(((i + 1) / count) * 100).toFixed(2)
         avg += this.percent
@@ -263,7 +267,7 @@ export default {
           // 日志结束
           const logparam = {
             uuid: retlog.data.opt_id,
-            endtime: new Date(),
+            endtime: new Date().toLocaleDateString(),
             lang_from: this.form.from,
             lang_to: this.form.to,
             engine: this.form.engine,

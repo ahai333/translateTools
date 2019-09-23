@@ -38,18 +38,6 @@ export default {
           show: true
         },
         {
-          prop: 'target',
-          label: this.$t('logView.target'),
-          width: 400,
-          show: true
-        },
-        {
-          prop: 'targetlen',
-          label: this.$t('logView.length'),
-          width: 80,
-          show: true
-        },
-        {
           prop: 'mt',
           label: this.$t('logView.mt'),
           width: 400,
@@ -59,12 +47,6 @@ export default {
           prop: 'mtlen',
           label: this.$t('logView.length'),
           width: 80,
-          show: true
-        },
-        {
-          prop: 'similarity',
-          label: this.$t('logView.similarity'),
-          width: 150,
           show: true
         },
         {
@@ -88,7 +70,7 @@ export default {
     getDetail(opt_id) {
       const param = {
         opt_id: opt_id,
-        tablename: 'similarity_detail'
+        tablename: 'mt_detail'
       }
       detail(param).then(res => {
         this.detailValue = res.data

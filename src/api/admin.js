@@ -23,18 +23,3 @@ export function delAdmin(data) {
   })
 }
 
-export function startLog(params) {
-  return request({
-    url: '/sys/startlog',
-    method: 'get',
-    params: params
-  })
-}
-
-export function endLog(params) {
-  return request({
-    url: '/sys/endlog',
-    method: 'get',
-    params: params
-  })
-}

@@ -1,14 +1,14 @@
 import request from '@/utils/request'
 
-export function optLog(params) {
+export function list(params) {
   return request({
-    url: '/log/opt',
+    url: '/log/list',
     method: 'post',
     params
   })
 }
 
-export function detailLog(params) {
+export function detail(params) {
   return request({
     url: '/log/detail',
     method: 'post',

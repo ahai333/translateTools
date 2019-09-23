@@ -75,8 +75,22 @@
           >{{ $t('transView.downloadModelFile') }}</el-link>
         </el-col>
       </el-row>
-      <el-progress :text-inside="true" :stroke-width="24" :percentage="percent" status="success" />
+      <el-row>
+        <el-col :span="5">
+          <el-form-item :label="$t('transView.types')">
+            <el-input v-model="form.types" />
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
+
+    <el-progress
+      :text-inside="true"
+      :stroke-width="24"
+      :percentage="percent"
+      status="success"
+      style="margin-top:10px"
+    />
     <el-table
       v-loading="listLoading"
       :data="tableData"
@@ -101,10 +115,9 @@
 
 <script>
 import UploadExcelComponent from '@/components/UploadExcel/index.vue'
-import { trans } from '@/api/translate.js'
+import { mt, startLog, endLog } from '@/api/mt.js'
 import XLSX from 'xlsx'
-// import local from './local'
-// const viewName = 'transView'
+import { getToken } from '@/utils/auth'
 
 import lang from '@/utils/lang'
 export default {
@@ -117,7 +130,8 @@ export default {
       form: {
         engine: 'google',
         from: 'en',
-        to: 'zh-CN'
+        to: 'zh-CN',
+        types: ''
       },
       engineOption: ['google', 'google(com)', 'baidu', 'youdao'],
       codeOption: [],
@@ -148,6 +162,7 @@ export default {
   computed: {},
   created() {
     this.codeOption = lang.code_name
+    this.username = getToken()
   },
   methods: {
     beforeUpload(file) {
@@ -200,23 +215,46 @@ export default {
       // console.log(this.tableData, 'tableData')
     },
     async onTranslate() {
+      const retlog = await startLog({ username: this.username })
+
       const count = this.tableData.length
       this.percent = 0
       const param = {
         engine: this.form.engine,
-        data: '',
+        source: '',
         from: this.form.from,
-        to: this.form.to
+        to: this.form.to,
+        opt_id: retlog.data.opt_id
       }
       for (let i = 0; i < count; i++) {
-        param.data = this.tableData[i].source
+        param.source = this.tableData[i].source
         // console.log(param, 'param')
 
-        const res = await trans(param)
+        const res = await mt(param)
         // console.log(res, 'trans')
         this.percent = +(((i + 1) * 100) / count).toFixed(3)
 
         this.tableData[i].translate = res.data.text
+
+        if (i + 1 === count) {
+          this.$forceUpdate()
+          // 日志结束
+          const logparam = {
+            uuid: retlog.data.opt_id,
+            endtime: new Date().toLocaleDateString(),
+            lang_from: this.form.from,
+            lang_to: this.form.to,
+            engine: this.form.engine,
+            types: this.form.types,
+            content: 'total items: ' + count,
+            remarks: ''
+          }
+          const ret = await endLog(logparam)
+          this.$message({
+            message: ret.msg,
+            type: 'success'
+          })
+        }
       }
     }, // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
     sheet2blob(sheet, sheetName) {
