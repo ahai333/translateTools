@@ -22,6 +22,7 @@ export default {
       username: '',
       values: [],
       detailVisible: false,
+      // 	uuid	user_id	lang_from	lang_to	types	engine	avg	starttime	endtime	content	remarks
       labels: [
         {
           prop: 'uuid', // 数据库中的编号
@@ -36,33 +37,33 @@ export default {
           show: false
         },
         {
-          prop: 'operate',
-          label: this.$t('logView.operate'),
+          prop: 'lang_from',
+          label: this.$t('similarity.lang_from'),
+          width: 150,
+          show: true
+        },
+        {
+          prop: 'lang_to',
+          label: this.$t('similarity.lang_to'),
+          width: 150,
+          show: true
+        },
+        {
+          prop: 'types',
+          label: this.$t('similarity.types'),
           width: 200,
           show: true
         },
         {
-          prop: 'detail',
-          label: 'detail',
-          width: 200,
-          show: false
+          prop: 'avg',
+          label: this.$t('similarity.avg'),
+          width: 150,
+          show: true
         },
         {
           prop: 'engine',
           label: this.$t('logView.engine'),
           width: 150,
-          show: true
-        },
-        {
-          prop: 'starttime',
-          label: this.$t('logView.starttime'),
-          width: 200,
-          show: true
-        },
-        {
-          prop: 'endtime',
-          label: this.$t('logView.endtime'),
-          width: 250,
           show: true
         },
         {
@@ -76,27 +77,43 @@ export default {
           label: this.$t('logView.remarks'),
           width: 350,
           show: true
+        },
+        {
+          prop: 'starttime',
+          label: this.$t('logView.starttime'),
+          width: 200,
+          show: true
+        },
+        {
+          prop: 'endtime',
+          label: this.$t('logView.endtime'),
+          width: 250,
+          show: true
         }
       ]
     }
   },
   created() {
     this.username = getToken()
+    this.user_id = getToken('user_id')
     this.getList()
   },
   methods: {
     getList() {
-      optLog({ username: this.username }).then(res => {
-        this.values = res.data
-        this.$message({
-          message: res.msg,
-          type: 'success'
-        })
-      })
+      optLog({ user_id: this.user_id, tablename: 'similarity_log' }).then(
+        res => {
+          this.values = res.data
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          })
+        }
+      )
     },
     getDetail(opt_id) {
       const param = {
-        opt_id: opt_id
+        opt_id: opt_id,
+        tablename: 'similarity_detail'
       }
       detailLog(param).then(res => {
         this.detailValue = res.data

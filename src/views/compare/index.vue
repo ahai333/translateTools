@@ -3,27 +3,27 @@
     <el-form v-model="form">
       <el-row :gutter="10">
         <el-col :span="12">
-          <el-form-item :label="$t('diffView.firstData')">
+          <el-form-item :label="$t('compareView.firstData')">
             <el-input
               v-model="form.oldStr"
               type="textarea"
               :autosize="{minRows: 2, maxRows: 15}"
-              :placeholder="$t('diffView.inputData')"
+              :placeholder="$t('compareView.inputData')"
             />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="$t('diffView.secondData')">
+          <el-form-item :label="$t('compareView.secondData')">
             <el-input
               v-model="form.newStr"
               type="textarea"
               :autosize="{minRows: 2, maxRows: 15}"
-              :placeholder="$t('diffView.inputData')"
+              :placeholder="$t('compareView.inputData')"
             />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="$t('diffView.displayStyle')">
+          <el-form-item :label="$t('compareView.displayStyle')">
             <el-switch v-model="fotmat" active-text="line-by-line" inactive-text="side-by-side" />
           </el-form-item>
         </el-col>
@@ -41,7 +41,7 @@
 <script>
 import codeDiff from 'vue-code-diff'
 export default {
-  name: 'DiffView',
+  name: 'CompareView',
   components: {
     codeDiff
   },

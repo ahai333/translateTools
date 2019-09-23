@@ -1,7 +1,7 @@
 const similarity = {
-  firstData: '文本一：',
-  secondData: '文本二：',
-  inputData: '请输入',
-  displayStyle: '展示效果：'
+  lang_from: '源语言',
+  lang_to: '目标语言',
+  types: '领域',
+  avg: '平均相似度'
 }
 export default similarity

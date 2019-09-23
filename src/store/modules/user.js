@@ -40,8 +40,9 @@ const actions = {
           // commit('SET_NAME', data.name)
           // console.log(data, 'login')
 
-          setToken(data.token)
-          setToken(data.auth, 'Authorization')
+          setToken(data.token) // 用户名
+          setToken(data.user_id, 'user_id') // 用户对应的uuid
+          setToken(data.auth, 'Authorization') // json web token信息
           resolve()
         })
         .catch(error => {

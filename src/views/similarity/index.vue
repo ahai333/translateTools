@@ -75,6 +75,11 @@
           >{{ $t('transView.downloadModelFile') }}</el-link>
         </el-col>
       </el-row>
+      <el-row>
+        <el-col :span="4">
+          <el-input v-model="form.types" :placeholder="$t('transView.types')" />
+        </el-col>
+      </el-row>
       <el-progress :text-inside="true" :stroke-width="24" :percentage="percent" status="success" />
     </el-form>
     <el-table
@@ -117,7 +122,8 @@ export default {
       form: {
         engine: 'google',
         from: 'en',
-        to: 'zh-CN'
+        to: 'zh-CN',
+        types: ''
       },
       engineOption: ['google', 'google(com)', 'baidu', 'youdao'],
       codeOption: [],
@@ -223,7 +229,7 @@ export default {
     async onQuality() {
       const retlog = await startLog({ username: this.username })
 
-      console.log(retlog, 'onQuality')
+      // console.log(retlog, 'onQuality')
 
       const param = {
         engine: this.form.engine,
@@ -236,6 +242,8 @@ export default {
       const count = this.tableData.length
       this.percent = 0
 
+      let avg = 0.0
+
       for (let i = 0; i < count; i++) {
         param.source = this.tableData[i].source
         param.target = this.tableData[i].target
@@ -247,6 +255,7 @@ export default {
         this.tableData[i].quality = res.data.quality
 
         this.percent = +(((i + 1) / count) * 100).toFixed(2)
+        avg += this.percent
         // console.log(i + 1, count, typeof this.percent, this.percent, 'percent')
         //  this.listLoading = i + 1 === count ? false : true
         if (i + 1 === count) {
@@ -255,8 +264,11 @@ export default {
           const logparam = {
             uuid: retlog.data.opt_id,
             endtime: new Date(),
-            detail: 1,
+            lang_from: this.form.from,
+            lang_to: this.form.to,
             engine: this.form.engine,
+            types: this.form.types,
+            avg: +(avg / count).toFixed(2),
             content: 'total items: ' + count,
             remarks: ''
           }

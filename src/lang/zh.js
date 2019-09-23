@@ -1,4 +1,5 @@
 import compareView from './zh/compareView'
+import similarity from './zh/similarity'
 
 export default {
   route: {
@@ -103,7 +104,8 @@ export default {
     errorFile: '上传文件格式错误',
     errorSize: '上传文件应不大于1Mb',
     similarity: '相似度(%)',
-    clear: '清除结果'
+    clear: '清除结果',
+    types: '请输入所属领域'
   },
   logView: {
     operate: '操作',
@@ -115,7 +117,8 @@ export default {
     engine: '翻译引擎',
     target: '目标语言',
     mt: '机器翻译',
-    similarity: '相似度(%)'
+    similarity: '相似度(%)',
+    length: '长度'
   },
   systemView: {
     addnew: '添加新用户',
@@ -141,5 +144,6 @@ export default {
     remove: '批量删除',
     delete: '删除'
   },
-  compareView
+  compareView,
+  similarity
 }

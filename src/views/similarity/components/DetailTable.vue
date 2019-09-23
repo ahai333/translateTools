@@ -85,8 +85,10 @@ export default {
 
       let endpos = this.pagesize + startpos
       if (endpos > this.total) {
-        endpos = this.total - startpos
+        endpos = this.total
       }
+      console.log(startpos, endpos, 'pos')
+
       for (let i = startpos; i < endpos; i++) {
         this.currecords.push(this.records[i])
       }
