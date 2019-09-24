@@ -183,6 +183,8 @@ export default {
         date.getFullYear() +
         (date.getMonth() + 1) +
         date.getDate() +
+        date.getHours() +
+        date.getMinutes() +
         '.xlsx'
       this.openDownloadDialog(this.sheet2blob(sheet), fn)
     },

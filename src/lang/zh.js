@@ -117,7 +117,9 @@ export default {
     engine: '翻译引擎',
     target: '目标语言',
     mt: '机器翻译',
-    similarity: '相似度(%)',
+    similarity: '相似度(LCS)',
+    similarity2: '相似度(LD)',
+    similarity3: '相似度(simhash)',
     length: '长度'
   },
   systemView: {

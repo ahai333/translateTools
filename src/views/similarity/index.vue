@@ -164,7 +164,19 @@ export default {
         },
         {
           prop: 'similarity',
-          label: this.$t('transView.similarity'),
+          label: this.$t('logView.similarity'),
+          width: 120,
+          show: true
+        },
+        {
+          prop: 'similarity2',
+          label: this.$t('logView.similarity2'),
+          width: 120,
+          show: true
+        },
+        {
+          prop: 'similarity3',
+          label: this.$t('logView.similarity3'),
           width: 120,
           show: true
         }
@@ -211,11 +223,13 @@ export default {
       for (let index = 0; index < len; index++) {
         // for (const index in results) {
         const tmp = {
-          index: index + start,
+          index: index + start + 1,
           source: '',
           target: '',
           translate: '',
-          similarity: 0
+          similarity: 0,
+          similarity2: 0,
+          similarity3: 0
         }
         if (typeof results[index].source !== 'undefined') {
           tmp.source = results[index].source
@@ -223,12 +237,18 @@ export default {
         if (typeof results[index].target !== 'undefined') {
           tmp.target = results[index].target
         }
-        if (typeof results[index].translate !== 'undefined') {
-          tmp.translate = results[index].translate
-        }
-        if (typeof results[index].similarity !== 'undefined') {
-          tmp.similarity = results[index].similarity
-        }
+        // if (typeof results[index].translate !== 'undefined') {
+        //   tmp.translate = results[index].translate
+        // }
+        // if (typeof results[index].similarity !== 'undefined') {
+        //   tmp.similarity = results[index].similarity
+        // }
+        // if (typeof results[index].similarity2 !== 'undefined') {
+        //   tmp.similarity = results[index].similarity2
+        // }
+        // if (typeof results[index].similarity3 !== 'undefined') {
+        //   tmp.similarity = results[index].similarity3
+        // }
         this.tableData.push(tmp)
       }
     },
@@ -249,6 +269,11 @@ export default {
       let avg = 0.0
 
       for (let i = 0; i < count; i++) {
+        this.tableData[i].translate = ''
+        this.tableData[i].similarity = 0
+        this.tableData[i].similarity2 = 0
+        this.tableData[i].similarity3 = 0
+
         param.source = this.tableData[i].source
         param.target = this.tableData[i].target
         this.tableData[i].translate = ''
@@ -257,6 +282,8 @@ export default {
 
         this.tableData[i].translate = res.data.text
         this.tableData[i].similarity = res.data.similarity
+        this.tableData[i].similarity2 = res.data.similarity2
+        this.tableData[i].similarity3 = res.data.similarity3
 
         this.percent = +(((i + 1) / count) * 100).toFixed(2)
         avg += this.percent

@@ -68,6 +68,18 @@ export default {
           show: true
         },
         {
+          prop: 'similarity2',
+          label: this.$t('logView.similarity2'),
+          width: 150,
+          show: true
+        },
+        {
+          prop: 'similarity3',
+          label: this.$t('logView.similarity3'),
+          width: 150,
+          show: true
+        },
+        {
           prop: 'remarks',
           label: this.$t('logView.remarks'),
           width: 150,

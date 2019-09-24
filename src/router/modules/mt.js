@@ -9,7 +9,7 @@ const mtRouter = {
   name: 'mt',
   meta: {
     title: 'mt',
-    icon: 'example'
+    icon: 'international'
   },
   children: [
     {

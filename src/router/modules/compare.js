@@ -9,7 +9,7 @@ const compareRouter = {
   name: 'compare',
   meta: {
     title: 'compare',
-    icon: 'example'
+    icon: 'form'
   },
   children: [
     {

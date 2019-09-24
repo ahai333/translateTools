@@ -199,7 +199,7 @@ export default {
       for (let index = 0; index < len; index++) {
         // for (const index in results) {
         const tmp = {
-          index: index + start,
+          index: index + start + 1,
           source: '',
           translate: ''
         }
@@ -207,9 +207,9 @@ export default {
         if (typeof results[index].source !== 'undefined') {
           tmp.source = results[index].source
         }
-        if (typeof results[index].translate !== 'undefined') {
-          tmp.translate = results[index].translate
-        }
+        // if (typeof results[index].translate !== 'undefined') {
+        //   tmp.translate = results[index].translate
+        // }
         this.tableData.push(tmp)
       }
       // console.log(this.tableData, 'tableData')
@@ -227,11 +227,10 @@ export default {
         opt_id: retlog.data.opt_id
       }
       for (let i = 0; i < count; i++) {
+        this.tableData[i].translate = ''
         param.source = this.tableData[i].source
-        // console.log(param, 'param')
 
         const res = await mt(param)
-        // console.log(res, 'trans')
         this.percent = +(((i + 1) * 100) / count).toFixed(3)
 
         this.tableData[i].translate = res.data.text

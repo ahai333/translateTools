@@ -19,7 +19,7 @@ export function endLog(params) {
 export function mt(params) {
   return request({
     url: '/v1/mt/do',
-    method: 'get',
+    method: 'post',
     params
   })
 }

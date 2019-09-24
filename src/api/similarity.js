@@ -19,7 +19,7 @@ export function endLog(params) {
 export function similarity(params) {
   return request({
     url: '/v1/simil/do',
-    method: 'get',
+    method: 'post',
     params
   })
 }
