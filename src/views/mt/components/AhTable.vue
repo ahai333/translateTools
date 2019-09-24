@@ -48,7 +48,7 @@
       </el-table-column>
     </el-table>
     <!--工具条-->
-    <el-col :span="24" class="toolbar">
+    <el-col :span="24" class="toolbar" style="margin-top:50px">
       <el-pagination
         layout="total, sizes, prev, pager, next, jumper"
         :page-size="pagesize"
