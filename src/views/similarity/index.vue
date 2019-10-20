@@ -94,6 +94,7 @@
       v-loading="listLoading"
       :data="tableData"
       border
+      show-summary
       highlight-current-row
       style="width: 100%;margin-top:20px;"
       stripe
@@ -128,8 +129,8 @@ export default {
       tableHeader: [],
       form: {
         engine: 'google',
-        from: 'en',
-        to: 'zh-CN',
+        from: 'zh-CN',
+        to: 'pt',
         types: ''
       },
       engineOption: ['google', 'google(com)', 'baidu', 'youdao'],
@@ -286,7 +287,7 @@ export default {
         this.tableData[i].similarity3 = res.data.similarity3
 
         this.percent = +(((i + 1) / count) * 100).toFixed(2)
-        avg += this.percent
+        avg += res.data.similarity
         // console.log(i + 1, count, typeof this.percent, this.percent, 'percent')
         //  this.listLoading = i + 1 === count ? false : true
         if (i + 1 === count) {

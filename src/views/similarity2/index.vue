@@ -1,16 +1,22 @@
 <template>
   <div class="app-container">
     <upload-excel-component :on-success="handleSuccess" :before-upload="beforeUpload" />
-    <el-form v-model="form" style="margin:10px">
+    <el-form v-model="form" style="margin-top:20px" label-width="100px">
       <el-row>
         <el-col :span="5">
           <el-form-item :label="$t('transView.engine')">
             <el-select
-              v-model="form.engine"
+              v-model="form.engines"
               filterable
+              multiple
               :placeholder="$t('transView.selectPlaceholder')"
             >
-              <el-option v-for="item in engineOption" :key="item" :label="item" :value="item" />
+              <el-option
+                v-for="item in engineOption"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -51,7 +57,7 @@
             type="primary"
             plain
             :disabled="tableData.length===0"
-            @click="onTranslate"
+            @click="onSimilarity"
           >{{ $t('transView.beginTranslate') }}</el-button>
           <el-button
             type="primary"
@@ -68,7 +74,7 @@
         </el-col>
         <el-col :span="2">
           <el-link
-            href="/files/trans.xlsx"
+            href="/files/test.xlsx"
             target="_blank"
             type="primary"
             icon="el-icon-view"
@@ -83,7 +89,6 @@
         </el-col>
       </el-row>
     </el-form>
-
     <el-progress
       :text-inside="true"
       :stroke-width="24"
@@ -95,6 +100,7 @@
       v-loading="listLoading"
       :data="tableData"
       border
+      show-summary
       highlight-current-row
       style="width: 100%;margin-top:20px;"
       stripe
@@ -115,11 +121,11 @@
 
 <script>
 import UploadExcelComponent from '@/components/UploadExcel/index.vue'
-import { mt, startLog, endLog } from '@/api/mt.js'
+import { similarity2, startLog, endLog } from '@/api/similarity.js'
 import XLSX from 'xlsx'
+import lang from '@/utils/lang'
 import { getToken } from '@/utils/auth'
 
-import lang from '@/utils/lang'
 export default {
   name: 'UploadExcel',
   components: { UploadExcelComponent },
@@ -128,15 +134,41 @@ export default {
       tableData: [],
       tableHeader: [],
       form: {
-        engine: 'google',
+        engines: ['google', 'google(com)', 'baidu', 'youdao'],
         from: 'zh-CN',
         to: 'pt',
         types: ''
       },
-      engineOption: ['google', 'google(com)', 'baidu', 'youdao'],
+      engineOption: [
+        { label: '谷歌翻译(中国)', value: 'google' },
+        { label: '谷歌翻译(海外)', value: 'google(com)' },
+        { label: '百度', value: 'baidu' },
+        { label: '有道', value: 'youdao' }
+      ],
       codeOption: [],
       percent: 0,
       listLoading: false,
+      username: '',
+      label: [
+        {
+          prop: 'index',
+          label: this.$t('transView.index'),
+          width: 80,
+          show: true
+        },
+        {
+          prop: 'source',
+          label: this.$t('transView.source'),
+          width: 400,
+          show: true
+        },
+        {
+          prop: 'target',
+          label: this.$t('transView.target'),
+          width: 400,
+          show: true
+        }
+      ],
       labels: [
         {
           prop: 'index',
@@ -147,19 +179,18 @@ export default {
         {
           prop: 'source',
           label: this.$t('transView.source'),
-          width: 600,
+          width: 400,
           show: true
         },
         {
-          prop: 'translate',
-          label: this.$t('transView.machineTranslate'),
-          width: 600,
+          prop: 'target',
+          label: this.$t('transView.target'),
+          width: 400,
           show: true
         }
       ]
     }
   },
-  computed: {},
   created() {
     this.codeOption = lang.code_name
     this.username = getToken()
@@ -181,7 +212,50 @@ export default {
     onClear() {
       this.tableData = []
     },
+    // 根据引擎动态改变表格项
+    setTableLable(res) {
+      // for (let i = 0; i < this.tableData.length; i++) {
+      //   for (let j = 1; j < res.length; j++) {
+      //     this.tableData[i]['trans' + j] = ''
+      //     this.tableData[i]['lcs' + j] = 0
+      //     this.tableData[i]['ld' + j] = 0
+      //     this.tableData[i]['sh' + j] = 0
+      //   }
+      // }
+
+      const lb = [...this.label]
+      let i = 1
+      for (const option of res) {
+        lb.push({
+          prop: 'trans' + i,
+          label: option,
+          width: 400,
+          show: true
+        })
+        lb.push({
+          prop: 'lcs' + i,
+          label: 'lcs',
+          width: 100,
+          show: true
+        })
+        lb.push({
+          prop: 'ld' + i,
+          label: 'ld',
+          width: 100,
+          show: true
+        })
+        lb.push({
+          prop: 'sh' + i,
+          label: 'simhash',
+          width: 100,
+          show: true
+        })
+        i++
+      }
+      this.labels = lb
+    },
     handleSuccess({ results, header }) {
+      // 判断格式
       // this.tableHeader = header
       // for (const index in header) {
       //   if (header[index] !== this.labels[index].prop) {
@@ -201,40 +275,68 @@ export default {
         const tmp = {
           index: index + start + 1,
           source: '',
-          translate: ''
+          target: '',
+          trans1: '',
+          lcs1: '',
+          ld1: '',
+          sh1: '',
+          trans2: '',
+          lcs2: '',
+          ld2: '',
+          sh2: '',
+          trans3: '',
+          lcs3: '',
+          ld3: '',
+          sh3: '',
+          trans4: '',
+          lcs4: '',
+          ld4: '',
+          sh4: ''
         }
-
         if (typeof results[index].source !== 'undefined') {
           tmp.source = results[index].source
         }
-        // if (typeof results[index].translate !== 'undefined') {
-        //   tmp.translate = results[index].translate
-        // }
+        if (typeof results[index].target !== 'undefined') {
+          tmp.target = results[index].target
+        }
         this.tableData.push(tmp)
       }
-      // console.log(this.tableData, 'tableData')
     },
-    async onTranslate() {
+    async onSimilarity() {
+      this.setTableLable(this.form.engines)
+
       const retlog = await startLog({ username: this.username })
 
-      const count = this.tableData.length
-      this.percent = 0
       const param = {
-        engine: this.form.engine,
-        source: '',
+        engines: JSON.stringify(this.form.engines),
+        source: 'this is a test.',
+        target: '这是一个测试。',
         from: this.form.from,
         to: this.form.to,
         opt_id: retlog.data.opt_id
       }
+      const count = this.tableData.length
+      this.percent = 0
+
+      let avg = 0.0
+
       for (let i = 0; i < count; i++) {
         this.tableData[i].translate = ''
+
         param.source = this.tableData[i].source
+        param.target = this.tableData[i].target
+        this.tableData[i].translate = ''
+        // console.log(param, 'onSimilarity')
 
-        const res = await mt(param)
-        this.percent = +(((i + 1) * 100) / count).toFixed(3)
+        let res = await similarity2(param)
+        // console.log(res, 'similarity2')
 
-        this.tableData[i].translate = res.data.text
+        this.tableData[i] = Object.assign(this.tableData[i], res.data)
 
+        this.percent = +(((i + 1) / count) * 100).toFixed(2)
+        avg += res.data['lcs1']
+        // console.log(i + 1, count, typeof this.percent, this.percent, 'percent')
+        //  this.listLoading = i + 1 === count ? false : true
         if (i + 1 === count) {
           this.$forceUpdate()
           // 日志结束
@@ -245,16 +347,18 @@ export default {
             lang_to: this.form.to,
             engine: this.form.engine,
             types: this.form.types,
+            avg: +(avg / count).toFixed(2),
             content: 'total items: ' + count,
             remarks: ''
           }
-          const ret = await endLog(logparam)
+          res = await endLog(logparam)
           this.$message({
-            message: ret.msg,
+            message: res.msg,
             type: 'success'
           })
         }
       }
+      // this.$forceUpdate()
     }, // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
     sheet2blob(sheet, sheetName) {
       sheetName = sheetName || 'sheet1'

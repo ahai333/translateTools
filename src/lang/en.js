@@ -29,6 +29,7 @@ export default {
     translog: 'Operation log',
     detail: 'Detail logs',
     similarity: 'Similarity',
+    similarity2: 'Similarity v2',
     similarityIndex: 'Similarity',
     compare: 'Text Comparison',
     compareIndex: 'Text Comparison',

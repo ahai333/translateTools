@@ -36,6 +36,7 @@ export default {
     syslog: '系统日志',
     detail: '详情',
     similarity: '相似度',
+    similarity2: '相似度V2',
     similarityIndex: '计算相似度',
     compare: '文本比较',
     compareIndex: '文本比较',

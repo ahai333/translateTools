@@ -23,3 +23,11 @@ export function similarity(params) {
     params
   })
 }
+
+export function similarity2(params) {
+  return request({
+    url: '/v1/simil/do2',
+    method: 'post',
+    params
+  })
+}

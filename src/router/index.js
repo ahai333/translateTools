@@ -13,6 +13,7 @@ import Layout from '@/layout'
 import systemRouter from './modules/system'
 import compareRouter from './modules/compare'
 import similarityRouter from './modules/similarity'
+import similarityRouter2 from './modules/similarity2'
 import mtRouter from './modules/mt'
 
 /**
@@ -130,6 +131,7 @@ export const asyncRoutes = [
   //  logRouter,
   compareRouter,
   similarityRouter,
+  similarityRouter2,
   mtRouter,
 
   systemRouter,
