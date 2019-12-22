@@ -31,5 +31,7 @@ module.exports = {
    * The default is only used in the production env
    * If you want to also use it in dev, you can pass ['production', 'development']
    */
-  errorLog: 'production'
+  errorLog: 'production',
+  // baseUrl: 'http://test.translate.com.mo:7001' // api地址
+  baseUrl: 'http://127.0.0.1:7001' // api地址
 }

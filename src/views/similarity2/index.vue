@@ -101,6 +101,8 @@
       :data="tableData"
       border
       show-summary
+      sum-text="平均值"
+      :summary-method="getSummaries"
       highlight-current-row
       style="width: 100%;margin-top:20px;"
       stripe
@@ -134,13 +136,13 @@ export default {
       tableData: [],
       tableHeader: [],
       form: {
-        engines: ['google', 'google(com)', 'baidu', 'youdao'],
-        from: 'zh-CN',
+        engines: ['google(com)'],
+        from: 'zh-TW',
         to: 'pt',
         types: ''
       },
       engineOption: [
-        { label: '谷歌翻译(中国)', value: 'google' },
+        { label: '谷歌翻译(大陆)', value: 'google' },
         { label: '谷歌翻译(海外)', value: 'google(com)' },
         { label: '百度', value: 'baidu' },
         { label: '有道', value: 'youdao' }
@@ -196,6 +198,33 @@ export default {
     this.username = getToken()
   },
   methods: {
+    // 计算平均值
+    getSummaries(param) {
+      const { columns, data } = param
+      const sums = []
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '平均值'
+          return
+        }
+        const values = data.map(item => Number(item[column.property]))
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr)
+            if (!isNaN(value)) {
+              return prev + curr
+            } else {
+              return prev
+            }
+          }, 0)
+          sums[index] = (sums[index] / data.length).toFixed(2)
+        } else {
+          sums[index] = 'N/A'
+        }
+      })
+
+      return sums
+    },
     beforeUpload(file) {
       const isLt1M = file.size / 1024 / 1024 < 1
 

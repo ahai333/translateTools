@@ -12,7 +12,7 @@
     <el-form-item label="头像" prop="avatar">
       <el-upload
         class="avatar-uploader"
-        action="http://127.0.0.1:7001/upload/upimage"
+        :action="actionUrl"
         :show-file-list="false"
         :on-success="handleLicenseSuccess"
         :before-upload="beforeAvatarUpload"
@@ -26,13 +26,14 @@
 </template>
 
 <script>
-import { updateProfile } from '@/api/'
+import { updateProfile } from '@/api/user'
 export default {
   props: {
     user: {
       type: Object,
       default: () => {
         return {
+          actionUrl: this.$store.state.settings.uploadUrl,
           name: '',
           email: '',
           avatar: ''
@@ -53,7 +54,7 @@ export default {
     },
     handleLicenseSuccess(res, file) {
       this.user.avatar = res.data
-      console.log(this.user.avatar, 'handleLicenseSuccess')
+      // console.log(this.user.avatar, 'handleLicenseSuccess')
     },
     beforeAvatarUpload(file) {
       // const isJPG = file.type === 'image/jpeg'
